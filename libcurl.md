@@ -29,6 +29,7 @@ __easy interface__
 
 Create an request using the easy interface. Options below:
 
+<div class=small>
 ----------------------------- -------------------------------------------------------
 __Main options__
 `url`                         [URL to work on.][curl_url]
@@ -264,7 +265,7 @@ __Debugging__
 `debugfunction`               [Callback for debug information.][curl_debugfunction]
 `debugdata`                   [Data pointer to pass to the debug callback.][curl_debugdata]
 ----------------------------- -------------------------------------------------------
-
+</div>
 
 [curl_url]:                         http://curl.haxx.se/libcurl/c/CURLOPT_URL.html
 [curl_protocols]:                   http://curl.haxx.se/libcurl/c/CURLOPT_PROTOCOLS.html
