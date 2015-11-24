@@ -63,7 +63,7 @@ __Progress Tracking__
 `progressfunction`            [][curl_progressfunction]
 `progressdata`                [][curl_progressdata]
 __Error Handling__
-`verbose`                     [][curl_verbose]
+`verbose`                     [Display verbose information.][curl_verbose]
 `stderr`                      [][curl_stderr]
 `errorbuffer`                 [][curl_errorbuffer]
 `failonerror`                 [][curl_failonerror]
