@@ -528,21 +528,21 @@ handle.
 <div class=small>
 ----------------------------- ------------ --------------------------------------------------------------------
 __Main options__              __default__
-`socketfunction`              TODO         [TODO][curlmopt_socketfunction]
-`socketdata`                  TODO         [TODO][curlmopt_socketdata]
-`pipelining`                  TODO         [TODO][curlmopt_pipelining]
-`timerfunction`               TODO         [TODO][curlmopt_timerfunction]
-`timerdata`                   TODO         [TODO][curlmopt_timerdata]
-`maxconnects`                 TODO         [TODO][curlmopt_maxconnects]
-`max_host_connections`        TODO         [TODO][curlmopt_max_host_connections]
-`max_pipeline_length`         TODO         [TODO][curlmopt_max_pipeline_length]
-`content_length_penalty_size` TODO         [TODO][curlmopt_content_length_penalty_size]
-`chunk_length_penalty_size`   TODO         [TODO][curlmopt_chunk_length_penalty_size]
-`pipelining_site_bl`          TODO         [TODO][curlmopt_pipelining_site_bl]
-`pipelining_server_bl`        TODO         [TODO][curlmopt_pipelining_server_bl]
-`max_total_connections`       TODO         [TODO][curlmopt_max_total_connections]
-`pushfunction`                TODO         [TODO][curlmopt_pushfunction]
-`pushdata`                    TODO         [TODO][curlmopt_pushdata]
+`socketfunction`                           [Callback about what to wait for][curlmopt_socketfunction]
+`socketdata`                               [Custom pointer passed to the socket callback][curlmopt_socketdata]
+`pipelining`                  false        [enable/disable HTTP pipelining][curlmopt_pipelining]
+`timerfunction`                            [Set callback to receive timeout values][curlmopt_timerfunction]
+`timerdata`                                [Custom pointer to pass to timer callback][curlmopt_timerdata]
+`maxconnects`                              [Set size of connection cache][curlmopt_maxconnects]
+`max_host_connections`                     [Set max number of connections to a single host][curlmopt_max_host_connections]
+`max_pipeline_length`         5            [Maximum number of requests in a pipeline][curlmopt_max_pipeline_length]
+`content_length_penalty_size`              [Size threshold for pipelining penalty][curlmopt_content_length_penalty_size]
+`chunk_length_penalty_size`                [Chunk length threshold for pipelining][curlmopt_chunk_length_penalty_size]
+`pipelining_site_bl`                       [Pipelining host blacklist][curlmopt_pipelining_site_bl]
+`pipelining_server_bl`                     [Pipelining server blacklist][curlmopt_pipelining_server_bl]
+`max_total_connections`                    [Max simultaneously open connections][curlmopt_max_total_connections]
+`pushfunction`                             [Callback that approves or denies server pushes][curlmopt_pushfunction]
+`pushdata`                                 [Pointer to pass to push callback][curlmopt_pushdata]
 ----------------------------- ------------ --------------------------------------------------------------------
 </div>
 
