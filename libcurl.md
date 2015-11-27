@@ -48,14 +48,16 @@ __misc.__
 
 ### `curl.easy{options...} -> tr`
 
-Create a transfer using the easy interface. Returns a table: the `CURL`
-C handle is in `tr._curl`. Callbacks receive `tr` as first arg.
-FFI callback objects are freed on `tr:free()`.
+Create a transfer using the easy interface. Returns a transfer object
+(the `CURL` C handle is in `tr._curl`).
 
 Options below (they also go for `tr:set()`). Enum options can be given
 as strings (case-insensitive, no prefix). Bitmask options can be given
 as tables of form `{mask_name = true|false}` (again, the mask name follows
-the C name but case-insensitive and without the prefix).
+the C name but case-insensitive and without the prefix). `curl_slist` options
+can be given as lists of strings. Callbacks can be given as Lua functions:
+they receive `tr` as first arg and the ffi callback objects are freed
+on `tr:free()`.
 
 <div class=small>
 ----------------------------- ------------ --------------------------------------------------------------------
@@ -538,8 +540,8 @@ __Main options__              __default__
 `max_pipeline_length`         5            [Maximum number of requests in a pipeline][curlmopt_max_pipeline_length]
 `content_length_penalty_size`              [Size threshold for pipelining penalty][curlmopt_content_length_penalty_size]
 `chunk_length_penalty_size`                [Chunk length threshold for pipelining][curlmopt_chunk_length_penalty_size]
-`pipelining_site_bl`                       [Pipelining host blacklist][curlmopt_pipelining_site_bl]
-`pipelining_server_bl`                     [Pipelining server blacklist][curlmopt_pipelining_server_bl]
+`pipelining_site_bl`                       [Pipelining host blacklist (list of strings)][curlmopt_pipelining_site_bl]
+`pipelining_server_bl`                     [Pipelining server blacklist (list of strings)][curlmopt_pipelining_server_bl]
 `max_total_connections`                    [Max simultaneously open connections][curlmopt_max_total_connections]
 `pushfunction`                             [Callback that approves or denies server pushes][curlmopt_pushfunction]
 `pushdata`                                 [Pointer to pass to push callback][curlmopt_pushdata]
