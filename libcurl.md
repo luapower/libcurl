@@ -522,8 +522,7 @@ __Debugging__
 
 Create a transfer using the multi interface. The details are the same
 as with the easy interface except that the list of options is different
-and specific to the multi interface and `tr._curl` points to a `CURLM`
-handle.
+and specific to the multi interface.
 
 <div class=small>
 ----------------------------- ------------ --------------------------------------------------------------------
