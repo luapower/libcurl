@@ -48,10 +48,8 @@ __misc.__
 
 ### `curl.easy{options...} -> tr`
 
-Create a transfer using the easy interface. Returns a transfer object
-(the `CURL` C handle is in `tr._curl`).
-
-Options below (they also go for `tr:set()`). Enum options can be given
+Create a transfer using the easy interface. Options are below
+(they also go for `tr:set()`). Enum options can be given
 as strings (case-insensitive, no prefix). Bitmask options can be given
 as tables of form `{mask_name = true|false}` (again, the mask name follows
 the C name but case-insensitive and without the prefix). `curl_slist` options
