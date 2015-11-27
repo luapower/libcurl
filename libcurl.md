@@ -36,7 +36,7 @@ __misc.__
 `curl.init([flags])`                                    [global libcurl init][curlopt_global_init]
 `curl.free()`                                           [global libcurl cleanup][curlopt_global_cleanup]
 `curl.version() -> s`                                   get version info as a string
-`curl.version_info([ver]) -> curl_version_info_data`    get version info as a struct
+`curl.version_info([ver]) -> curl_version_info_data`    get detailed version info as a table
 ------------------------------------------------------- -------------------------------------------------------
 
 [curlopt_easy_recv]:      http://curl.haxx.se/libcurl/c/curl_easy_recv.html
