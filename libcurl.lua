@@ -12,6 +12,7 @@ local M = {C = C}
 --global buffers for C "out" variables
 local intbuf = ffi.new'int[1]'
 local longbuf = ffi.new'long[1]'
+local sizetbuf = ffi.new'size_t[1]'
 
 local function ptr(p) --convert NULL -> nil
 	return p ~= nil and p or nil
@@ -208,13 +209,13 @@ function easy.strerror(code)
 	return ffi.string(self._strerror(code))
 end
 
-function easy:_ret(code)
-	if code == C.CURLE_OK then return self end
+function easy:_ret(code, retval)
+	if code == C.CURLE_OK then return retval or self end
 	return nil, self.strerror(code), code
 end
 
-function easy:_check(code)
-	if code == C.CURLE_OK then return self end
+function easy:_check(code, retval)
+	if code == C.CURLE_OK then return retval or self end
 	error('libcurl error: '..self.strerror(code), 2)
 end
 
@@ -222,14 +223,10 @@ function easy:_cleanup()
 	C.curl_easy_cleanup(self)
 end
 function easy:close()
-	if not self then return end
 	self:_cleanup()
-	ffi.gc(self, nil)
 	self:_free_pinned_vals()
-	self = nil
 end
-
-easy_mt.__gc = close
+easy_mt.__gc = easy.close
 
 --options --------------------------------------------------------------------
 
@@ -469,8 +466,8 @@ function easy:set(k, v)
 	local optnum = X(self._setopt_prefix, k)
 	local convert = assert(self._setopt_options[optnum])
 	local cval, pinval, iscallback = convert(v)
-	local self, err, errcode = self:_check(self._setopt(self, optnum, cval))
-	if not self then
+	local ok, err, errcode = self:_check(self._setopt(self, optnum, cval), true)
+	if not ok then
 		return nil, err, errcode
 	end
 	if pinval then
@@ -647,12 +644,14 @@ end
 
 --misc -----------------------------------------------------------------------
 
-function easy:recv(buf, buflen, n)
-	return self:_ret(C.curl_easy_recv(self, buf, buflen, n))
+function easy:recv(buf, buflen)
+	local code = C.curl_easy_recv(self, buf, buflen, sizetbuf)
+	return self:_ret(code, sizetbuf[0])
 end
 
 function easy:send(buf, buflen, n)
-	return self:_ret(C.curl_easy_send(self, buf, buflen, n))
+	local code = C.curl_easy_send(self, buf, buflen, sizetbuf)
+	return self:_ret(code, sizetbuf[0])
 end
 
 function easy:escape(s)
@@ -692,6 +691,7 @@ multi._strerror = C.curl_multi_strerror
 multi.strerror = easy.strerror
 multi._ret = easy._ret
 multi._check = easy._check
+
 function multi:_cleanup()
 	self:_check(C.curl_multi_cleanup(self))
 end
@@ -718,14 +718,14 @@ multi._setopt_options = {
 multi._setopt = C.curl_multi_setopt
 multi._setopt_prefix = 'CURLMOPT_'
 multi.set = easy.set
-multi._pin_val = easy._pin_val
+
+multi._update_pinned_val = easy._update_pinned_val
 multi._copy_pinned_vals = easy._copy_pinned_vals
 multi._free_pinned_vals = easy._free_pinned_vals
 
 function multi:perform()
-	local self, err, errcode = self:_ret(C.curl_multi_perform(self, intbuf))
-	if not self then return nil, err, errcode end
-	return intbuf[0]
+	local code = C.curl_multi_perform(self, intbuf)
+	return self:_ret(code, intbuf[0])
 end
 
 function multi:add(curl)
@@ -737,17 +737,15 @@ function multi:remove(curl)
 end
 
 function multi:fdset(read_fd_set, write_fd_set, exc_fd_set)
-	local self, err, errcode = self:_ret(C.curl_multi_fdset(self,
-		read_fd_set, write_fd_set, exc_fd_set, intbuf))
-	if not self then return nil, err, errcode end
-	return self, intbuf[0]
+	local code = C.curl_multi_fdset(self,
+		read_fd_set, write_fd_set, exc_fd_set, intbuf)
+	return self:_ret(code, intbuf[0])
 end
 
 function multi:wait(timeout, extra_fds, extra_nfds)
-	local self, err, errcode = self:_ret(C.curl_multi_wait(self,
-		extra_fds, extra_nfds or 0, (timeout or 0) * 1000, intbuf))
-	if not self then return nil, err, errcode end
-	return self, intbuf[0]
+	local code = C.curl_multi_wait(self,
+		extra_fds, extra_nfds or 0, (timeout or 0) * 1000, intbuf)
+	return self:_ret(code, intbuf[0])
 end
 
 function multi:timeout()
@@ -756,24 +754,19 @@ function multi:timeout()
 end
 
 function multi:info_read()
-	local msg = C.curl_multi_info_read(self, intbuf)
-	return msg ~= nil and msg or nil, intbuf[0]
+	local msg = ptr(C.curl_multi_info_read(self, intbuf))
+	return msg, intbuf[0]
 end
 
---[[
-function multi:socket_action()
-	local self, err, errcode = self:_ret(C.curl_multi_socket_action(self,
-				  curl_socket_t s,
-				  int ev_bitmask,
-				  int *running_handles))
-	if not self then return nil, err, errcode end
-	return self, intbuf[0]
+function multi:socket_action(sock, bits)
+	local bits = MX('CURL_CSELECT_', bits)
+	local code = C.curl_multi_socket_action(self, sock, bits, intbuf)
+	return self:_ret(code, intbuf[0])
 end
 
-function multi:assign()
-	return self:_ret(C.curl_multi_assign(self, curl_socket_t sockfd, void *sockp))
+function multi:assign(sockfd, pd)
+	return self:_check(C.curl_multi_assign(self, sockfd, p))
 end
-]]
 
 ffi.metatype('CURLM', multi_mt)
 

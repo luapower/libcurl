@@ -24,7 +24,7 @@ function make_easy()
 		url = 'http://google.com/',
 		verbose = false,
 		noprogress = true,
-		xferinfofunction = function(self, _, ...)
+		xferinfofunction = function(self, ...)
 			print(...)
 			return 0
 		end,
