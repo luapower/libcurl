@@ -16,7 +16,7 @@ file transfer resume, http proxy tunneling and more!
 
 ------------------------------------------------------- -------------------------------------------------------
 __easy interface__
-`curl.easy(url|{opt = val, ...}) -> etr`                [create an easy transfer][curl_easy_init]
+`curl.easy(url|{opt = val, ...}) -> etr`                [create][curl_easy_init] an [easy transfer][libcurl-easy]
 `etr:set(opt, val) -> etr`                              [set an option][curl_easy_setopt]
 `etr:set{opt = val, ...} -> etr`                        [set multiple options][curl_easy_setopt]
 `etr:perform() -> etr | nil,err,ecode`                  [perform the transfer][curl_easy_perform]
@@ -29,7 +29,7 @@ __easy interface__
 `etr:escape(s) -> s|nil`                                [escape URL][curl_easy_escape]
 `etr:unescape(s) -> s|nil`                              [unescape URL][curl_easy_unescape]
 __multi interface__
-`curl.multi([{opt = val, ...}]) -> mtr`                 [create a multi transfer][curl_multi_init]
+`curl.multi([{opt = val, ...}]) -> mtr`                 [create][curl_multi_init] a [multi transfer][libcurl-multi]
 `mtr:set(opt, val) -> mtr`                              [set an option][curl_multi_setopt]
 `mtr:set{opt = val, ...} -> mtr`                        [set multiple options][curl_multi_setopt]
 `mtr:add(etr) -> mtr`                                   [add an easy transfer to the queue][curl_multi_add_handle]
@@ -45,7 +45,7 @@ __multi interface__
 `mtr:socket_action()`                                   [read/write available data given an action][curl_multi_socket_action]
 `mtr:assign(sockfd, p) -> mtr`                          [set data to associate with an internal socket][curl_multi_assign]
 __share interface__
-`curl.share([{opt = val, ...}]) -> shr`                 [create a shared object][curl_share_init]
+`curl.share([{opt = val, ...}]) -> shr`                 [create][curl_share_init] a [shared object][libcurl-share]
 `shr:set(opt, val) -> shr`                              [set ab option][curl_share_setopt]
 `shr:set{opt = val, ...} -> shr`                        [set multiple options][curl_share_setopt]
 `shr:free()`                                            [free the shared object][curl_share_cleanup]
@@ -62,6 +62,7 @@ __misc.__
 `curl.share.strerror(errcode) -> errmsg`                [look-up a share interface error code][curl_share_strerror]
 ------------------------------------------------------- -------------------------------------------------------
 
+[libcurl-easy]:             http://curl.haxx.se/libcurl/c/libcurl-easy.html
 [curl_easy_init]:           http://curl.haxx.se/libcurl/c/curl_easy_init.html
 [curl_easy_setopt]:         http://curl.haxx.se/libcurl/c/curl_easy_setopt.html
 [curl_easy_perform]:        http://curl.haxx.se/libcurl/c/curl_easy_perform.html
@@ -72,6 +73,7 @@ __misc.__
 [curl_easy_recv]:           http://curl.haxx.se/libcurl/c/curl_easy_recv.html
 [curl_easy_send]:           http://curl.haxx.se/libcurl/c/curl_easy_send.html
 
+[libcurl-multi]:            http://curl.haxx.se/libcurl/c/libcurl-multi.html
 [curl_multi_init]:          http://curl.haxx.se/libcurl/c/curl_multi_init.html
 [curl_multi_setopt]:        http://curl.haxx.se/libcurl/c/curl_multi_setopt.html
 [curl_multi_add_handle]:    http://curl.haxx.se/libcurl/c/curl_multi_add_handle.html
@@ -85,6 +87,7 @@ __misc.__
 [curl_multi_socket_action]: http://curl.haxx.se/libcurl/c/curl_multi_socket_action.html
 [curl_multi_assign]:        http://curl.haxx.se/libcurl/c/curl_multi_assign.html
 
+[libcurl-share]:            http://curl.haxx.se/libcurl/c/libcurl-share.html
 [curl_share_init]:          http://curl.haxx.se/libcurl/c/curl_share_init.html
 [curl_share_cleanup]:       http://curl.haxx.se/libcurl/c/curl_share_cleanup.html
 [curl_share_setopt]:        http://curl.haxx.se/libcurl/c/curl_share_setopt.html
@@ -109,7 +112,7 @@ of easy transfers.
 
 ## Easy interface
 
-### `curl.easy(url) -> etr` <br> `curl.easy{option = value,...} -> etr`
+### `curl.easy(url) -> etr` <br> `curl.easy{option = value, ...} -> etr`
 
 Create a transfer using the [easy interface]. Options are below
 (they also go for `etr:set()`). All options are assumed immutable.
@@ -629,6 +632,12 @@ __Main options__
 [curlmopt_max_total_connections]:        http://curl.haxx.se/libcurl/c/CURLMOPT_MAX_TOTAL_CONNECTIONS.html
 [curlmopt_pushfunction]:                 http://curl.haxx.se/libcurl/c/CURLMOPT_PUSHFUNCTION.html
 [curlmopt_pushdata]:                     http://curl.haxx.se/libcurl/c/CURLMOPT_PUSHDATA.html
+
+## Shared interface
+
+### `curl.shared([{option = value, ...}]) -> mtr`
+
+Create a [shared object][curl_share].
 
 ## Binaries
 
