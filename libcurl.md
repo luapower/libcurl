@@ -45,8 +45,7 @@ __multi interface__
 `mtr:assign(sockfd, p) -> mtr`                          [set data to associate with an internal socket][curl_multi_assign]
 __share interface__
 `curl.share([{opt = val, ...}]) -> shr`                 [create][curl_share_init] a [share object][libcurl-share]
-`shr:set(opt, val) -> shr`                              [set an option][curl_share_setopt]
-`shr:set{opt = val, ...} -> shr`                        [set multiple options][curl_share_setopt]
+`shr:set(opt,val | {opt=val}) -> shr`                   [set option(s)][curl_share_setopt]
 `shr:free()`                                            [free the share object][curl_share_cleanup]
 __misc.__
 `curl.C`                                                the libcurl ffi clib object/namespace
