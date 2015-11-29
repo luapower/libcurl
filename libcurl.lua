@@ -23,7 +23,7 @@ local function X(prefix, x) --convert flag -> C[prefix..flag:upper()]
 end
 
 --convert {flag1 = true, ...} -> bit.bor(C[prefix..flag1:upper()], ...)
-local function MX(prefix, x)
+local function MX(prefix, t)
 	local val = 0
 	for flag, truthy in pairs(t) do
 		if truthy then
@@ -790,14 +790,15 @@ share.strerror = easy.strerror
 share._ret = easy._ret
 share._check = easy._check
 
-function share:free()
-
+function share:_cleanup()
+	self:_check(C.curl_share_cleanup(self))
 end
+share.free = easy.close
 share_mt.__gc = share.free
 
 share._setopt_options = {
-	[C.CURLSHOPT_SHARE]   = flags('CURL_LOCK_DATA_', 'int'),
-	[C.CURLSHOPT_UNSHARE] = flags('CURL_LOCK_DATA_', 'int'),
+	[C.CURLSHOPT_SHARE]   = flag('CURL_LOCK_DATA_', 'int'),
+	[C.CURLSHOPT_UNSHARE] = flag('CURL_LOCK_DATA_', 'int'),
 	[C.CURLSHOPT_LOCKFUNC]   = cb'curl_lock_function',
 	[C.CURLSHOPT_UNLOCKFUNC] = cb'curl_unlock_function',
 	[C.CURLSHOPT_USERDATA] = voidp,

@@ -16,7 +16,7 @@ file transfer resume, http proxy tunneling and more!
 
 ------------------------------------------------------- -------------------------------------------------------
 __easy interface__
-`curl.easy(url|{opt = val, ...}) -> etr`                create an easy transfer
+`curl.easy(url|{opt = val, ...}) -> etr`                [create an easy transfer][curl_easy_init]
 `etr:set(opt, val) -> etr`                              [set an option][curl_easy_setopt]
 `etr:set{opt = val, ...} -> etr`                        [set multiple options][curl_easy_setopt]
 `etr:perform() -> etr | nil,err,ecode`                  [perform the transfer][curl_easy_perform]
@@ -29,7 +29,7 @@ __easy interface__
 `etr:escape(s) -> s|nil`                                [escape URL][curl_easy_escape]
 `etr:unescape(s) -> s|nil`                              [unescape URL][curl_easy_unescape]
 __multi interface__
-`curl.multi([{opt = val, ...}]) -> mtr`                 create a multi transfer
+`curl.multi([{opt = val, ...}]) -> mtr`                 [create a multi transfer][curl_multi_init]
 `mtr:set(opt, val) -> mtr`                              [set an option][curl_multi_setopt]
 `mtr:set{opt = val, ...} -> mtr`                        [set multiple options][curl_multi_setopt]
 `mtr:add(etr) -> mtr`                                   [add an easy transfer to the queue][curl_multi_add_handle]
@@ -62,29 +62,34 @@ __misc.__
 `curl.share.strerror(errcode) -> errmsg`                [look-up a share interface error code][curl_share_strerror]
 ------------------------------------------------------- -------------------------------------------------------
 
+[curl_easy_init]:           http://curl.haxx.se/libcurl/c/curl_easy_init.html
+[curl_easy_setopt]:         http://curl.haxx.se/libcurl/c/curl_easy_setopt.html
 [curl_easy_perform]:        http://curl.haxx.se/libcurl/c/curl_easy_perform.html
 [curl_easy_cleanup]:        http://curl.haxx.se/libcurl/c/curl_easy_cleanup.html
 [curl_easy_duphandle]:      http://curl.haxx.se/libcurl/c/curl_easy_duphandle.html
-[curl_easy_setopt]:         http://curl.haxx.se/libcurl/c/curl_easy_setopt.html
 [curl_easy_reset]:          http://curl.haxx.se/libcurl/c/curl_easy_reset.html
 [curl_easy_getinfo]:        http://curl.haxx.se/libcurl/c/curl_easy_getinfo.html
 [curl_easy_recv]:           http://curl.haxx.se/libcurl/c/curl_easy_recv.html
 [curl_easy_send]:           http://curl.haxx.se/libcurl/c/curl_easy_send.html
+
+[curl_multi_init]:          http://curl.haxx.se/libcurl/c/curl_multi_init.html
+[curl_multi_setopt]:        http://curl.haxx.se/libcurl/c/curl_multi_setopt.html
 [curl_multi_add_handle]:    http://curl.haxx.se/libcurl/c/curl_multi_add_handle.html
 [curl_multi_remove_handle]: http://curl.haxx.se/libcurl/c/curl_multi_remove_handle.html
 [curl_multi_perform]:       http://curl.haxx.se/libcurl/c/curl_multi_perform.html
 [curl_multi_cleanup]:       http://curl.haxx.se/libcurl/c/curl_multi_cleanup.html
-[curl_multi_setopt]:        http://curl.haxx.se/libcurl/c/curl_multi_setopt.html
-[curl_multi_fdset]:         http://curl.haxx.se/libcurl/c/curl_multi_fdset.html
 [curl_multi_wait]:          http://curl.haxx.se/libcurl/c/curl_multi_wait.html
+[curl_multi_fdset]:         http://curl.haxx.se/libcurl/c/curl_multi_fdset.html
 [curl_multi_timeout]:       http://curl.haxx.se/libcurl/c/curl_multi_timeout.html
 [curl_multi_info_read]:     http://curl.haxx.se/libcurl/c/curl_multi_info_read.html
 [curl_multi_socket_action]: http://curl.haxx.se/libcurl/c/curl_multi_socket_action.html
 [curl_multi_assign]:        http://curl.haxx.se/libcurl/c/curl_multi_assign.html
+
 [curl_share_init]:          http://curl.haxx.se/libcurl/c/curl_share_init.html
 [curl_share_cleanup]:       http://curl.haxx.se/libcurl/c/curl_share_cleanup.html
 [curl_share_setopt]:        http://curl.haxx.se/libcurl/c/curl_share_setopt.html
 [curl_share_strerror]:      http://curl.haxx.se/libcurl/c/curl_share_strerror.html
+
 [curl_global_init]:         http://curl.haxx.se/libcurl/c/curl_global_init.html
 [curl_global_init_mem]:     http://curl.haxx.se/libcurl/c/curl_global_init_mem.html
 [curl_global_cleanup]:      http://curl.haxx.se/libcurl/c/curl_global_cleanup.html

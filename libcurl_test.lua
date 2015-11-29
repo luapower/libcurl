@@ -134,6 +134,11 @@ function test.multi()
 	end
 end
 
+function test.share()
+	local sh = curl.share{unshare = 'cookie', userdata = 123}
+	sh:set('share', 'dns')
+	sh:free()
+end
 
 for i,name in ipairs(test) do
 	print(name .. ' ' .. ('-'):rep(78 - #name))
