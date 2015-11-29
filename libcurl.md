@@ -15,7 +15,7 @@ file transfer resume, http proxy tunneling and more!
 ## API
 
 ----------------------------------------------------------------------------------- -----------------------------------------------------------------------------------
-__easy interface__
+__easy interface__                                                                  &nbsp;
 `curl.easy(url | {opt=val}) -> etr`                                                 [create][curl_easy_init] an [easy transfer][libcurl-easy]
 `etr:set(opt,val | {opt=val}) -> etr`                                               [set option(s)][curl_easy_setopt]
 `etr:perform() -> etr | nil,err,ecode`                                              [perform the transfer][curl_easy_perform]
@@ -57,7 +57,7 @@ __misc.__
 `curl.multi.strerror(errcode) -> errmsg`                                            [look-up a multi interface error code][curl_multi_strerror]
 `curl.share.strerror(errcode) -> errmsg`                                            [look-up a share interface error code][curl_share_strerror]
 `curl.type(x) -> 'easy'|'multi'|'share'|nil`                                        get curl object type
-
+----------------------------------------------------------------------------------- -----------------------------------------------------------------------------------
 
 [libcurl-easy]:             http://curl.haxx.se/libcurl/c/libcurl-easy.html
 [curl_easy_init]:           http://curl.haxx.se/libcurl/c/curl_easy_init.html
