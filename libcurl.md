@@ -55,10 +55,10 @@ __multi interface__
 
 `mtr:close()`                                            [close the transfer][curl_multi_cleanup]
 
-`mtr:wait([timeout_seconds], [extra_fds, extra_nfds]) \  [poll on all handles][curl_multi_wait]
+`mtr:wait([timeout_seconds], [extra_fds, extra_nfds])    [poll on all handles][curl_multi_wait]
 -> numfds | nil,err,errcode`
 
-`mtr:fdset(read_fd_set, write_fd_set, exc_fd_set) \      [get file descriptors][curl_multi_fdset]
+`mtr:fdset(read_fd_set, write_fd_set, exc_fd_set)        [get file descriptors][curl_multi_fdset]
 -> max_fd | nil,err,errcode`
 
 `mtr:timeout() -> seconds | nil`                         [how long to wait for socket actions][curl_multi_timeout]
