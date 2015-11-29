@@ -18,7 +18,7 @@ file transfer resume, http proxy tunneling and more!
 __easy interface__
 `curl.easy(url|{opt = val, ...}) -> etr`                create an easy transfer
 `etr:set(opt, val) -> etr`                              [set an option][curl_easy_setopt]
-`etr:set{options...} -> etr`                            [set multiple options][curl_easy_setopt]
+`etr:set{opt = val, ...} -> etr`                        [set multiple options][curl_easy_setopt]
 `etr:perform() -> etr | nil,err,ecode`                  [perform the transfer][curl_easy_perform]
 `etr:close()`                                           [close the transfer][curl_easy_cleanup]
 `etr:clone([{opt = val, ...}]) -> etr`                  [clone a transfer][curl_easy_duphandle]
@@ -26,10 +26,12 @@ __easy interface__
 `etr:info(opt) -> val`                                  [get info about the transfer][curl_easy_getinfo]
 `etr:recv(buf, bufsize) -> n | nil,err,errcode`         [receive raw data][curl_easy_recv]
 `etr:send(buf, bufsize) -> n | nil,err,errcode`         [send raw data][curl_easy_send]
+`etr:escape(s) -> s|nil`                                [escape URL][curl_easy_escape]
+`etr:unescape(s) -> s|nil`                              [unescape URL][curl_easy_unescape]
 __multi interface__
 `curl.multi([{opt = val, ...}]) -> mtr`                 create a multi transfer
 `mtr:set(opt, val) -> mtr`                              [set an option][curl_multi_setopt]
-`mtr:set{options...} -> mtr`                            [set multiple options][curl_multi_setopt]
+`mtr:set{opt = val, ...} -> mtr`                        [set multiple options][curl_multi_setopt]
 `mtr:add(etr) -> mtr`                                   [add an easy transfer to the queue][curl_multi_add_handle]
 `mtr:remove(etr) -> mtr`                                [remove an easy transfer to the queue][curl_multi_remove_handle]
 `mtr:perform() -> transfers_left | nil,err,ecode`       [start/keep transfering][curl_multi_perform]
@@ -43,7 +45,10 @@ __multi interface__
 `mtr:socket_action()`                                   [read/write available data given an action][curl_multi_socket_action]
 `mtr:assign(sockfd, p) -> mtr`                          [set data to associate with an internal socket][curl_multi_assign]
 __share interface__
-TODO
+`curl.share([{opt = val, ...}]) -> shr`                 [create a shared object][curl_share_init]
+`shr:set(opt, val) -> shr`                              [set ab option][curl_share_setopt]
+`shr:set{opt = val, ...} -> shr`                        [set multiple options][curl_share_setopt]
+`shr:free()`                                            [free the shared object][curl_share_cleanup]
 __misc.__
 `curl.C`                                                the libcurl ffi clib object/namespace
 `curl.init(flags) -> curl`                              [global init][curl_global_init]
@@ -51,11 +56,10 @@ __misc.__
 `curl.free()`                                           [global cleanup][curl_global_cleanup]
 `curl.version() -> s`                                   [get version info as a string][curl_version]
 `curl.version_info([ver]) -> t`                         [get detailed version info as a table][curl_version_info]
-`etr:escape(s) -> s|nil`                                [escape URL][curl_easy_escape]
-`etr:unescape(s) -> s|nil`                              [unescape URL][curl_easy_unescape]
 `curl.getdate(s) -> timestamp`                          [parse a date/time to a Unix timestamp][curl_getdate]
 `curl.easy.strerror(errcode) -> errmsg`                 [look-up an easy interface error code][curl_easy_strerror]
 `curl.multi.strerror(errcode) -> errmsg`                [look-up a multi interface error code][curl_multi_strerror]
+`curl.share.strerror(errcode) -> errmsg`                [look-up a share interface error code][curl_share_strerror]
 ------------------------------------------------------- -------------------------------------------------------
 
 [curl_easy_perform]:        http://curl.haxx.se/libcurl/c/curl_easy_perform.html
@@ -77,6 +81,10 @@ __misc.__
 [curl_multi_info_read]:     http://curl.haxx.se/libcurl/c/curl_multi_info_read.html
 [curl_multi_socket_action]: http://curl.haxx.se/libcurl/c/curl_multi_socket_action.html
 [curl_multi_assign]:        http://curl.haxx.se/libcurl/c/curl_multi_assign.html
+[curl_share_init]:          http://curl.haxx.se/libcurl/c/curl_share_init.html
+[curl_share_cleanup]:       http://curl.haxx.se/libcurl/c/curl_share_cleanup.html
+[curl_share_setopt]:        http://curl.haxx.se/libcurl/c/curl_share_setopt.html
+[curl_share_strerror]:      http://curl.haxx.se/libcurl/c/curl_share_strerror.html
 [curl_global_init]:         http://curl.haxx.se/libcurl/c/curl_global_init.html
 [curl_global_init_mem]:     http://curl.haxx.se/libcurl/c/curl_global_init_mem.html
 [curl_global_cleanup]:      http://curl.haxx.se/libcurl/c/curl_global_cleanup.html

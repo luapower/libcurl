@@ -488,8 +488,8 @@ end
 
 --pinned values --------------------------------------------------------------
 
-local pins = {} --{CURL*|CURLM* = {optnum = value}}
-local cbs  = {} --{CURL*|CURLM* = {optnum = value}}
+local pins = {} --{CURL*|CURLM*|CURLSH* = {optnum = value}}
+local cbs  = {} --{CURL*|CURLM*|CURLSH* = {optnum = value}}
 
 function easy:_update_pinned_val(optnum, pinval, iscallback)
 	if not iscallback then
@@ -769,6 +769,48 @@ function multi:assign(sockfd, pd)
 end
 
 ffi.metatype('CURLM', multi_mt)
+
+--share interface ------------------------------------------------------------
+
+local share = {}
+setmetatable(share, share) --for __call
+M.share = share
+local share_mt = {__index = share}
+
+function share:__call(opt)
+	local self = assert(ptr(C.curl_share_init()))
+	if opt then
+		self:set(opt)
+	end
+	return self
+end
+
+share._strerror = C.curl_share_strerror
+share.strerror = easy.strerror
+share._ret = easy._ret
+share._check = easy._check
+
+function share:free()
+
+end
+share_mt.__gc = share.free
+
+share._setopt_options = {
+	[C.CURLSHOPT_SHARE]   = flags('CURL_LOCK_DATA_', 'int'),
+	[C.CURLSHOPT_UNSHARE] = flags('CURL_LOCK_DATA_', 'int'),
+	[C.CURLSHOPT_LOCKFUNC]   = cb'curl_lock_function',
+	[C.CURLSHOPT_UNLOCKFUNC] = cb'curl_unlock_function',
+	[C.CURLSHOPT_USERDATA] = voidp,
+}
+share._setopt = C.curl_share_setopt
+share._setopt_prefix = 'CURLSHOPT_'
+share.set = easy.set
+
+share._update_pinned_val = easy._update_pinned_val
+share._copy_pinned_vals = easy._copy_pinned_vals
+share._free_pinned_vals = easy._free_pinned_vals
+
+ffi.metatype('CURLSH', share_mt)
 
 
 return M

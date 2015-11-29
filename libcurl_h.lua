@@ -995,7 +995,7 @@ typedef void (*curl_lock_function)(CURL *handle,
 typedef void (*curl_unlock_function)(CURL *handle,
                                      curl_lock_data data,
                                      void *userptr);
-typedef void CURLSH;
+typedef struct CURLSH CURLSH;
 typedef enum {
 	CURLSHE_OK,
 	CURLSHE_BAD_OPTION,
