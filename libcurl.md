@@ -25,9 +25,9 @@ __easy interface__
 
 `etr:close()`                                                                       [close the transfer][curl_easy_cleanup]
 
-`etr:clone([{opt=val}]) -> etr`                                                     [clone a transfer][curl_easy_duphandle]
+`etr:clone([url | {opt=val}]) -> etr`                                               [clone a transfer][curl_easy_duphandle]
 
-`etr:reset() -> etr`                                                                [reset all options to their default values][curl_easy_reset]
+`etr:reset([{opt=val}]) -> etr`                                                     [reset all options to their default values][curl_easy_reset]
 
 `etr:info(opt) -> val`                                                              [get info about the transfer][curl_easy_getinfo]
 

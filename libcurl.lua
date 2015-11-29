@@ -484,9 +484,12 @@ function easy:set(k, v)
 	return self
 end
 
-function easy:reset()
+function easy:reset(opt)
 	self:_free_pinned_vals()
 	C.curl_easy_reset(self)
+	if opt then
+		self:set(opt)
+	end
 	return self
 end
 
