@@ -35,8 +35,8 @@ __multi interface__
 `mtr:remove(etr) -> mtr`                                [remove an easy transfer to the queue][curl_multi_remove_handle]
 `mtr:perform() -> transfers_left | nil,err,ecode`       [start/keep transfering][curl_multi_perform]
 `mtr:close()`                                           [close the transfer][curl_multi_cleanup]
-`mtr:wait([timeout_seconds], [extra_fds, extra_nfds])`  [poll on all handles][curl_multi_wait]
-`-> numfds | nil,err,errcode`
+`mtr:wait([timeout_seconds], [extra_fds, extra_nfds])\  [poll on all handles][curl_multi_wait]
+-> numfds | nil,err,errcode`
 `mtr:fdset(read_fd_set, write_fd_set, exc_fd_set)`      [get file descriptors][curl_multi_fdset]
 `-> max_fd | nil,err,errcode`
 `mtr:timeout() -> seconds | nil`                        [how long to wait for socket actions][curl_multi_timeout]
