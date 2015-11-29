@@ -44,13 +44,13 @@ __multi interface__
 `mtr:socket_action()`                                   [read/write available data given an action][curl_multi_socket_action]
 `mtr:assign(sockfd, p) -> mtr`                          [set data to associate with an internal socket][curl_multi_assign]
 __share interface__
-`curl.share([{opt = val, ...}]) -> shr`                 [create][curl_share_init] a [share object][libcurl-share]
+`curl.share([{opt=val}]) -> shr`                        [create][curl_share_init] a [share object][libcurl-share]
 `shr:set(opt,val | {opt=val}) -> shr`                   [set option(s)][curl_share_setopt]
 `shr:free()`                                            [free the share object][curl_share_cleanup]
 __misc.__
 `curl.C`                                                the libcurl ffi clib object/namespace
 `curl.init(flags) -> curl`                              [global init][curl_global_init]
-`curl.init{opt = val} -> curl`                          [global init with custom allocators][curl_global_init_mem]
+`curl.init{opt=val} -> curl`                            [global init with custom allocators][curl_global_init_mem]
 `curl.free()`                                           [global cleanup][curl_global_cleanup]
 `curl.version() -> s`                                   [get version info as a string][curl_version]
 `curl.version_info([ver]) -> t`                         [get detailed version info as a table][curl_version_info]
@@ -634,7 +634,7 @@ There's a section on the [libcurl tutorial] on how to use the multi interface.
 
 ## Share interface
 
-### `curl.share([{option = value, ...}]) -> shr`
+### `curl.share([{opt=val}]) -> shr`
 
 Create a [share object][libcurl-share]. Options below (also for `shr:set()`):
 
