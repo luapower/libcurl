@@ -871,6 +871,23 @@ function form_strerror(code)
 	return strerr[tonumber(code)] or 'Unknown error '..code
 end
 
+local convert_option --fw. decl.
+
+local function formarray(t)
+	assert(#t % 2 == 0)
+	local array = ffi.new('struct curl_forms[?]', #t+1)
+	local pins = {array}
+	local j = 0
+	for i=1,#t,2 do
+		local option, value = convert_option(t[i], t[i+1], pins)
+		array[j].option = option
+		array[j].value = ffi.cast('char*', value)
+		j = j + 1
+	end
+	array[j].option = ffi.cast('long', C.CURLFORM_END)
+	return array, pins
+end
+
 local formopt_options = {
 	[C.CURLFORM_COPYNAME] = str,
 	[C.CURLFORM_PTRNAME] = str,
@@ -890,27 +907,12 @@ local formopt_options = {
 	[C.CURLFORM_STREAM] = voidp,
 	[C.CURLFORM_CONTENTLEN] = off_t, --new in 7.46.0
 }
-local function convert_option(option, value, pins)
+function convert_option(option, value, pins)
 	local optnum = X('CURLFORM_', option)
 	local convert = assert(formopt_options[optnum])
 	local cval, pinval = convert(value)
 	table.insert(pins, pinval)
 	return ffi.cast('long', optnum), cval
-end
-
-local function formarray(t)
-	assert(#t % 2 == 0)
-	local array = ffi.new('curl_forms[?]', #t+1)
-	local pins = {array}
-	local j = 0
-	for i=1,#t,2 do
-		local option, value = convert_option(t[i], t[i+1], pins)
-		array[j].option = option
-		array[j].value = ffi.cast('char*', value)
-		j = j + 1
-	end
-	array[j] = ffi.cast('long', C.CURLFORM_END)
-	return array, pins
 end
 
 function curl.form()

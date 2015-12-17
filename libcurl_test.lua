@@ -194,7 +194,7 @@ function test.form()
 	form:add('ptrname', 'name1', 'ptrcontents', 'yy')
 	form:add('ptrname', 'name2', 'file', 'luajit', 'file', 'luajit.cmd')
 	form:add('ptrname', 'name3', 'bufferptr', '@@@@@@@@@@@@@', 'contenttype', 'text/plain')
-	form:add('ptrname', 'name4', 'bufferptr', 'aa', 'contentheader', {'H1: V1', 'H2: V2'})
+	form:add('array', {'ptrname', 'name4', 'bufferptr', 'aa', 'contentheader', {'H1: V1', 'H2: V2'}})
 
 	print('>>> form get as string')
 	local s = form:get()

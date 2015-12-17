@@ -720,6 +720,21 @@ is a Lua array of options. The 'end' option is appended automatically
 to the arg list and to arrays. All values are anchored for the lifetime
 of the form, so strings and cdata arrays can be passed in freely.
 
+Examples:
+
+~~~{.lua}
+form:add(
+	'ptrname', 'main-section',
+	'file', 'file1.txt',
+	'file', 'file2.txt'
+)
+form:add('array', {
+	'ptrname', 'main-section',
+	'ptrcontents', 'hello',
+	'contentheader', {'Header1: Value1', 'Header2: Value2'},
+})
+~~~
+
 ## Binaries
 
 The included libcurl binaries are compiled to use the SSL/TLS APIs
