@@ -79,9 +79,9 @@ __share interface__
 
 __multipart forms__
 
-`curl.form([{part1_t, ...}]) -> frm`                     [create a multipart form][curl_formadd]
+`curl.form() -> frm`                                     [create a multipart form][curl_formadd]
 
-`frm:add(part_t) -> frm`                                 [add a section to a multipart form][curl_formadd]
+`frm:add(opt1, val1, ...) -> frm`                        [add a section to a multipart form][curl_formadd]
 
 `frm:get() -> s`                                         [get a multipart form as string][curl_formget]
 
@@ -712,30 +712,13 @@ Create a [share object][libcurl-share]. Options below (also for `shr:set()`):
 
 ## Multipart forms
 
-### `curl.form([{part1_t, ...}]) -> frm`
+### `frm:add(opt1, val1, ...) -> frm`
 
-Create a [multipart form][curl_formadd]. If an array of parts is given,
-it calls `frm:add(part_t)` for each element of the array. A part is a table
-with the fields:
-
-<div class=small>
--------------------------------- --------------------------------------------------------------------
-`name: s`                        section name
-`headers: {h1, ...}`             array of strings
-`filename: s`                    filename
-`content_type`                   content-type
-`contents_file`                  read contents from file
-`contents: s`                    contents as string
-`contents: cdata`                contents as cdata (requires `content_length`)
-`contents_length`                length of contents
-`upload: s`                      upload file from file
-`upload: {file: s}`              upload file from file
-`upload: {string: s}`            upload file from string
-`upload: {buffer: p, length: n}` upload file from buffer
-`upload: {upload1_t, ...}`       upload multiple files
-`upload: {stream = p}`           upload via readfunction callback
--------------------------------- --------------------------------------------------------------------
-</div>
+Add a section to a [multipart form][curl_formadd]. Options can be given
+as strings (case-insensitive, no prefix). The value for the 'array' option
+is a Lua array of options. The 'end' option is appended automatically
+to the arg list and to arrays. All values are anchored for the lifetime
+of the form, so strings and cdata arrays can be passed in freely.
 
 ## Binaries
 
