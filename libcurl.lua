@@ -887,7 +887,7 @@ local formopt_options = {
 	[C.CURLFORM_STREAM] = voidp, --use readfunction to get data (contentlen required)
 }
 
-function curl.form(t)
+function curl.form(parts)
 	local first_item_buf = ffi.new'struct curl_httppost*[1]'
 	local last_item_buf  = ffi.new'struct curl_httppost*[1]'
 
@@ -954,7 +954,7 @@ function curl.form(t)
 						add('filename', upload.filename)
 					end
 				elseif upload.buffer then
-					add('bufferlength', assert(upload.buffer_length, 'buffer_length missing'))
+					add('bufferlength', assert(upload.length, 'length missing'))
 					add('bufferptr', upload.buffer)
 					if upload.filename then
 						add('buffer', upload.filename)
@@ -1019,6 +1019,12 @@ function curl.form(t)
 			get(arg)
 		else
 			error('invalid arg')
+		end
+	end
+
+	if parts then
+		for i,part in ipairs(parts) do
+			form:add(part)
 		end
 	end
 

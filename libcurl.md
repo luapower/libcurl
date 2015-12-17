@@ -79,9 +79,9 @@ __share interface__
 
 __multipart forms__
 
-`curl.form({part1, ...}) -> frm`                         [create a multipart form][curl_formadd]
+`curl.form([{part1_t, ...}]) -> frm`                     [create a multipart form][curl_formadd]
 
-`frm:add({opt = val}) -> frm`                            [add a section to a multipart form][curl_formadd]
+`frm:add(part_t) -> frm`                                 [add a section to a multipart form][curl_formadd]
 
 `frm:get() -> s`                                         [get a multipart form as string][curl_formget]
 
@@ -712,61 +712,30 @@ Create a [share object][libcurl-share]. Options below (also for `shr:set()`):
 
 ## Multipart forms
 
-### `curl.form()
+### `curl.form([{part1_t, ...}]) -> frm`
 
-		if t.name then add('ptrname', t.name) end
-		if t.headers then add('contentheader', t.headers) end
-		if t.filename then add('filename', t.filename) end
-		if t.content_type then add('contenttype', t.content_type) end
+Create a [multipart form][curl_formadd]. If an array of parts is given,
+it calls `frm:add(part_t)` for each element of the array. A part is a table
+with the fields:
 
-		local contentlen = curl.checkver(7, 46) and 'contentlen' or 'contentslength'
-
-		if t.contents_file then
-			if t.contents_length then
-				assert(len > 0, 'contents length must be > 0')
-				add(contentlen, t.contents_length)
-			end
-			add('filecontent', t.contents_file)
-		elseif type(t.contents) == 'string' then
-			local len = t.contents_length or #t.contents
-			assert(len > 0, 'contents length must be > 0')
-			add(contentlen, len)
-			add('ptrcontents', t.contents)
-		elseif type(t.contents) == 'cdata' then
-			local len = assert(t.contents_length, 'contents_length required')
-			assert(len > 0, 'contents length must be > 0')
-			add(contentlen, len)
-			add('ptrcontents', t.contents)
-		end
-
-		local uploads = t.upload
-		if type(uploads) == 'string' then --single file name
-			uploads = {{file = uploads}}
-		elseif type(uploads) == 'table' and #uploads == 0 then --single upload
-			uploads = {uploads}
-		end
-		if uploads then
-			for i,upload in pairs(uploads) do
-				if upload.file then
-					add('file', upload.file)
-					if upload.filename then
-						add('filename', upload.filename)
-					end
-				elseif upload.buffer then
-					add('bufferlength', upload.buffer_length)
-					add('bufferptr', upload.buffer)
-					if upload.filename then
-						add('buffer', upload.filename)
-					end
-				elseif upload.stream then
-					add('stream', upload.stream)
-					if upload.filename then
-						add('filename', upload.filename)
-					end
-				end
-			end
-		end
-
+<div class=small>
+-------------------------------- --------------------------------------------------------------------
+`name: s`                        section name
+`headers: {h1, ...}`             array of strings
+`filename: s`                    filename
+`content_type`                   content-type
+`contents_file`                  read contents from file
+`contents: s`                    contents as string
+`contents: cdata`                contents as cdata (requires `content_length`)
+`contents_length`                length of contents
+`upload: s`                      upload file from file
+`upload: {file: s}`              upload file from file
+`upload: {string: s}`            upload file from string
+`upload: {buffer: p, length: n}` upload file from buffer
+`upload: {upload1_t, ...}`       upload multiple files
+`upload: {stream = p}`           upload via readfunction callback
+-------------------------------- --------------------------------------------------------------------
+</div>
 
 ## Binaries
 
