@@ -178,7 +178,8 @@ option values are anchored internally for the lifetime of the transfer object.
 
 How option values are converted:
 
-* `long` and `off_t` options can be given as Lua numbers.
+* `long` and `off_t` options can be given as Lua numbers (no need for the
+`_long` suffix on `off_t` options).
 * Enum options can be given as strings (case-insensitive, no prefix).
 * Bitmask options can be given as tables of form `{mask_name = true|false}`
 (again, the mask name follows the C name but case-insensitive and without
