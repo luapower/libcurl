@@ -173,14 +173,19 @@ A multi transfer is set up as a list of easy transfers.
 ### `curl.easy(url | {opt=val}) -> etr`
 
 Create a transfer using the [easy interface][libcurl-easy]. Options are below
-(they also go for `etr:set()`). All options are assumed immutable.
-Enum options can be given as strings (case-insensitive, no prefix).
-Bitmask options can be given as tables of form `{mask_name = true|false}`
+(they also go for `etr:set()`). All options are assumed immutable and the
+option values are anchored internally for the lifetime of the transfer object.
+
+How option values are converted:
+
+* `long` and `off_t` options can be given as Lua numbers.
+* Enum options can be given as strings (case-insensitive, no prefix).
+* Bitmask options can be given as tables of form `{mask_name = true|false}`
 (again, the mask name follows the C name but case-insensitive and without
 the prefix).
-`curl_slist` options can be given as lists of strings.
-Callbacks can be given as Lua functions.
-The ffi callback objects are freed on `etr:free()` (*).
+* `curl_slist` options can be given as lists of strings.
+* Callbacks can be given as Lua functions. The ffi callback objects are
+freed on `etr:free()` (*).
 
 > (*) Callback objects are ref-counted which means that replacing them on
 cloned transfers does not result in double-frees, and freeing them is
