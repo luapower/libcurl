@@ -1,2 +1,1 @@
-C="-fPIC vtls/openssl.c" L="-s -static-libgcc" \
-	D=libcurl.so A=libcurl.a ./build.sh
+P=linux64 C="-fPIC" ./build-linux.sh
