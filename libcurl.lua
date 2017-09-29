@@ -31,6 +31,7 @@ local function MX(prefix, t)
 			val = bit.bor(val, X(prefix, flag))
 		end
 	end
+	return val
 end
 
 local function check(code)
@@ -754,7 +755,7 @@ multi._setopt_options = {
 	[C.CURLMOPT_MAX_PIPELINE_LENGTH] = longbool,
 	[C.CURLMOPT_CONTENT_LENGTH_PENALTY_SIZE] = longbool,
 	[C.CURLMOPT_CHUNK_LENGTH_PENALTY_SIZE] = longbool,
-	[C.CURLMOPT_PIPELINING_SITE_BL] = pcharlist,
+	[C.CURLMOPT_PIPELINING_SITE_BL] = pchararray,
 	[C.CURLMOPT_PIPELINING_SERVER_BL] = pchararray,
 	[C.CURLMOPT_MAX_TOTAL_CONNECTIONS] = long,
 	[C.CURLMOPT_PUSHFUNCTION] = cb'curl_push_callback',
