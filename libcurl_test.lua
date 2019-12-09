@@ -13,19 +13,22 @@ function test.version()
 	print(curl.version())
 end
 
+local function list(v)
+	local t = {'{'}
+	for k,v in pairs(v) do
+		if v then
+			t[#t+1] = k..','
+		end
+	end
+	t[#t+1] = '}'
+	return table.concat(t)
+end
+
 function test.version_info()
 	local info = curl.version_info()
 	for k,v in pairs(info) do
-		if k == 'protocols' then
-		elseif k == 'features' then
-			local t = {'{'}
-			for k,v in pairs(v) do
-				if v then
-					t[#t+1] = k..','
-				end
-			end
-			t[#t+1] = '}'
-			v = table.concat(t)
+		if k == 'protocols' or k == 'features' then
+			v = list(v)
 		end
 		print(string.format('%-20s %s', k, v))
 	end
