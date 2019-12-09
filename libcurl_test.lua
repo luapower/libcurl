@@ -8,6 +8,13 @@ local function add(test, name, func)
 end
 local test = setmetatable({}, {__newindex = add})
 
+--[[
+--TODO: load the default openssl file so it get get the path of the CA root file.
+local crypto = require'libcrypto'
+require'libcrypto_conf_h'
+assert(crypto.CONF_modules_load_file('/etc/ssl/openssl.cnf',
+	nil, crypto.CONF_MFLAGS_DEFAULT_SECTION) == 1)
+]]
 
 function test.version()
 	print(curl.version())
