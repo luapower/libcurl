@@ -163,8 +163,18 @@ __misc.__
 [curl_share_cleanup]:       http://curl.haxx.se/libcurl/c/curl_share_cleanup.html
 [curl_share_setopt]:        http://curl.haxx.se/libcurl/c/curl_share_setopt.html
 
-[curl_formadd]:             http://curl.haxx.se/libcurl/c/curl_formadd.html
-[curl_formget]:             http://curl.haxx.se/libcurl/c/curl_formget.html
+[curl_mime_init]:           http://curl.haxx.se/libcurl/c/curl_mime_init.html
+[curl_mime_free]:           http://curl.haxx.se/libcurl/c/curl_mime_free.html
+[curl_mime_addpart]:        http://curl.haxx.se/libcurl/c/curl_mime_addpart.html
+[curl_mime_name]:           http://curl.haxx.se/libcurl/c/curl_mime_name.html
+[curl_mime_filename]:       http://curl.haxx.se/libcurl/c/curl_mime_filename.html
+[curl_mime_type]:           http://curl.haxx.se/libcurl/c/curl_mime_type.html
+[curl_mime_encoder]:        http://curl.haxx.se/libcurl/c/curl_mime_encoder.html
+[curl_mime_data]:           http://curl.haxx.se/libcurl/c/curl_mime_data.html
+[curl_mime_filedata]:       http://curl.haxx.se/libcurl/c/curl_mime_filedata.html
+[curl_mime_data_cb]:        http://curl.haxx.se/libcurl/c/curl_mime_data_cb.html
+[curl_mime_subparts]:       http://curl.haxx.se/libcurl/c/curl_mime_subparts.html
+[curl_mime_headers]:        http://curl.haxx.se/libcurl/c/curl_mime_headers.html
 
 [curl_global_init]:         http://curl.haxx.se/libcurl/c/curl_global_init.html
 [curl_global_init_mem]:     http://curl.haxx.se/libcurl/c/curl_global_init_mem.html
