@@ -89,9 +89,9 @@ __multipart forms__
 
 `mimepart:filename(filename)`                            [set mime part's filename][curl_mime_filename]
 
-`mimepart:mime_type(mimetype)`                           [set mime part's mime-type][curl_mime_type]
+`mimepart:mime_type(mimetype)`                           [set mime part's content type][curl_mime_type]
 
-`mimepart:encoder(encoder)`                              [set mime part's encoder][curl_mime_encoder]
+`mimepart:encoder(encoder)`                              [set mime part's transfer encoding][curl_mime_encoder]
 
 `mimepart:mime_data(s[, sz])`                            [get mime part's data from string or cdata buffer][curl_mime_data]
 
