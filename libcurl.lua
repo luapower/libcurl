@@ -204,7 +204,7 @@ local function slist(t)
 		dt = {slist}
 		for i=1,#t do
 			local s = t[i]
-			slist[i-1].data = ffi.cast('char*', s)
+			slist[i-1].data = ffi.cast('const char*', s)
 			slist[i-1].next = i < #t and slist[i] or nil
 			table.insert(dt, s)
 		end
@@ -940,18 +940,23 @@ function mimepart:name      (v) check(C.curl_mime_name(self, v)) end
 function mimepart:filename  (v) check(C.curl_mime_filename(self, v)) end
 function mimepart:mime_type (v) check(C.curl_mime_type(self, v)) end
 function mimepart:encoder   (v) check(C.curl_mime_encoder(self, v)) end
-function mimepart:mime_data (v) check(C.curl_mime_data(self, s, sz or #s)) end
-function mimepart:mime_file (v) check(C.curl_mime_filedata(self, v)) end
-function mimepart:mime_data_cb(sz, read, seek, free, arg)
+function mimepart:data      (s, sz) check(C.curl_mime_data(self, s, sz or #s)) end
+function mimepart:file      (v) check(C.curl_mime_filedata(self, v)) end
+function mimepart:data_cb(sz, read, seek, free, arg)
 	check(C.curl_mime_data_cb(self, v, read, seek, free, arg))
 end
-function mimepart:mime_subparts(mimes)
+function mimepart:subparts(mimes)
 	local p = ffi.new('curl_mime[?]', #mimes + 1, mimes)
 	p[#mimes] = 0
 	check(C.curl_mime_subparts(self, p))
 end
-function mimepart:mime_headers(headers)
-	check(C.curl_mime_headers(self, headers, take_ownership))
+function mimepart:headers(headers)
+	local sl0 = ffi.new'struct curl_slist'
+	local sl = sl0
+	for i = 1, #headers do
+		sl0 = C.curl_slist_append(sl0, headers[i])
+	end
+	check(C.curl_mime_headers(self, sl0, true))
 end
 
 ffi.metatype('curl_mime', {__index = mime})

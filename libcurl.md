@@ -93,15 +93,15 @@ __multipart forms__
 
 `mimepart:encoder(encoder)`                              [set mime part's transfer encoding][curl_mime_encoder]
 
-`mimepart:mime_data(s[, sz])`                            [get mime part's data from string or cdata buffer][curl_mime_data]
+`mimepart:data(s[, sz])`                                 [get mime part's data from string or cdata buffer][curl_mime_data]
 
-`mimepart:mime_file(file)`                               [get mime part's data from file][curl_mime_filedata]
+`mimepart:file(file)`                                    [get mime part's data from file][curl_mime_filedata]
 
-`mimepart:mime_data_cb(sz, read, seek, free, arg)`       [get mime part's data with callbacks][curl_mime_data_cb]
+`mimepart:data_cb(sz, read, seek, free, arg)`            [get mime part's data with callbacks][curl_mime_data_cb]
 
-`mimepart:mime_subparts({mime1,...})`                    [set mime part's subparts][curl_mime_subparts]
+`mimepart:subparts({mime1,...})`                         [set mime part's subparts][curl_mime_subparts]
 
-`mimepart:mime_headers({header=value})`                  [set mime part's headers][curl_mime_headers]
+`mimepart:headers({header=value})`                       [set mime part's headers][curl_mime_headers]
 
 __misc.__
 

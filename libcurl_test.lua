@@ -208,7 +208,22 @@ function test.download()
 	sh:free()
 end
 
+function test.mime()
+	local e = curl.easy{
+		url = 'http://speedtest.tele2.net/upload.php',
+	}
+	local m = e:mime()
+	local p = m:part()
+	p:headers{'Some-Header: foo', 'Other-Header: bar'}
+	p:data'hello'
+	assert(e:perform())
+	e:close()
+end
+
 --run all tests in order
+
+test.mime()
+os.exit()
 
 for i,name in ipairs(test) do
 	print(name .. ' ' .. ('-'):rep(78 - #name))
