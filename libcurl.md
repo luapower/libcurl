@@ -89,6 +89,32 @@ __multipart forms__
 
 `frm:get(function(buf, len) end)`                        [get a multipart form to a callback][curl_formget]
 
+__multipart forms__
+
+`etr:mime() -> mime`                                     [create a mime object][curl_mime_init]
+
+`mime:free()`                                            [free a mime object][curl_mime_free]
+
+`mime:part() -> mimepart`                                [add a mime part to a mime object][curl_mime_addpart]
+
+`mimepart:name(name)`                                    [set mime part's name][curl_mime_name]
+
+`mimepart:filename(filename)`                            [set mime part's filename][curl_mime_filename]
+
+`mimepart:mime_type(mimetype)`                           [set mime part's mime-type][curl_mime_type]
+
+`mimepart:encoder(encoder)`                              [set mime part's encoder][curl_mime_encoder]
+
+`mimepart:mime_data(s[, sz])`                            [get mime part's data from string or cdata buffer][curl_mime_data]
+
+`mimepart:mime_file(file)`                               [get mime part's data from file][curl_mime_filedata]
+
+`mimepart:mime_data_cb(sz, read, seek, free, arg)`       [get mime part's data with callbacks][curl_mime_data_cb]
+
+`mimepart:mime_subparts({mime1,...})`                    [set mime part's subparts][curl_mime_subparts]
+
+`mimepart:mime_headers({header=value})`                  [set mime part's headers][curl_mime_headers]
+
 __misc.__
 
 `curl.C`                                                 the libcurl ffi clib object/namespace
