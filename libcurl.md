@@ -79,18 +79,6 @@ __share interface__
 
 __multipart forms__
 
-`curl.form() -> frm`                                     [create a multipart form][curl_formadd]
-
-`frm:add(opt1, val1, ...) -> frm`                        [add a section to a multipart form][curl_formadd]
-
-`frm:get() -> s`                                         [get a multipart form as string][curl_formget]
-
-`frm:get(out_t) -> out_t`                                [get a multipart form as an array of strings][curl_formget]
-
-`frm:get(function(buf, len) end)`                        [get a multipart form to a callback][curl_formget]
-
-__multipart forms__
-
 `etr:mime() -> mime`                                     [create a mime object][curl_mime_init]
 
 `mime:free()`                                            [free a mime object][curl_mime_free]
