@@ -235,7 +235,7 @@ __Main options__
 `timevalue`                   [Timestamp for conditional request.][curlopt_timevalue_large]
 __Progress Tracking__
 `noprogress`                  [Shut off the progress meter.][curlopt_noprogress]
-`progressfunction`            [OBSOLETE callback for progress meter.][curlopt_progressfunction]
+`progressfunction`            [Callback for progress meter.][curlopt_progressfunction]
 `progressdata`                [Data pointer to pass to the progress meter callback.][curlopt_progressdata]
 `xferinfofunction`            [Callback for progress meter.][curlopt_xferinfofunction]
 `xferinfodata`                [Data pointer to pass to the progress meter callback.][curlopt_xferinfodata]
