@@ -280,7 +280,7 @@ end
 
 function easy:_ret(code, retval)
 	if code == C.CURLE_OK then return retval or self end
-	return nil, self.strerror(code), code
+	return nil, self.strerror(code), tonumber(code)
 end
 
 function easy:_check(code, retval)
